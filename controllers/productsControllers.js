@@ -45,12 +45,11 @@ async function controllerCreateProduct(req,res) {
       price:100
     }; //Create product object
 
-    const newProduct = Product.create(product);
+    const newProduct = Product.modelCreateProduct(product);
+
     res.writeHead(201,{'Content-Type':'application/json'});
     return res.end(JSON.stringify(newProduct));
-  }catch(error){
-    console.log(error);
-  }
+  }catch(error){console.log(error)}
 }
 //END: controllerCreateProduct | @desc Create a Product | @route POST /api/products
 
