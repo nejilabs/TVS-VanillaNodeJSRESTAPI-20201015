@@ -1,11 +1,11 @@
 //Import Product Models
 const Product = require('../models/productsModel');
 
-//START: getProducts | @desc Gets All Products | @route GET /api/products
-async function getProducts(req,res) {
+//START: controllerGetAllProducts | @desc Gets All Products | @route GET /api/products
+async function controllerGetAllProducts(req,res) {
   try{
     //fetch data
-    const products = await Product.findAllProducts(); //From Models
+    const products = await Product.modelGetAllProducts(); //From Models
 
     res.writeHead(200,{'Content-Type':'application/json'});
     res.end(JSON.stringify(products));
@@ -13,12 +13,12 @@ async function getProducts(req,res) {
     console.log(error);
   }
 }
-//END: getProducts | @desc Gets All Products | @route GET /api/products
+//END: controllerGetAllProducts | @desc Gets All Products | @route GET /api/products
 
-//START: getProduct | @desc Get Single Product | @route GET /api/products/:id
-async function getProduct(req,res,id) {
+//START: controllerGetProductById | @desc Get Single Product | @route GET /api/products/:id
+async function controllerGetProductById(req,res,id) {
   try{
-    const product = await Product.findProductById(id); //From Models
+    const product = await Product.modelGetProductById(id); //From Models
 
     if (!product){
       //If Product DOES NOT Exist
@@ -33,10 +33,28 @@ async function getProduct(req,res,id) {
     console.log(error);
   }
 }
-//END: getProduct | @desc Get Single Product | @route GET /api/products/:id
+//END: controllerGetProductById | @desc Get Single Product | @route GET /api/products/:id
 
+
+//START: controllerCreateProduct | @desc Create a Product | @route POST /api/products
+async function controllerCreateProduct(req,res) {
+  try{
+    const product = {
+      title:'Test Product',
+      description:'This is my product',
+      price:100
+    }; //Create product object
+
+    const newProduct = Product.create(product);
+    res.writeHead(201,{'Content-Type':'application/json'});
+    return res.end(JSON.stringify(newProduct));
+  }catch(error){
+    console.log(error);
+  }
+}
+//END: controllerCreateProduct | @desc Create a Product | @route POST /api/products
 
 
 module.exports={
-  getProducts, getProduct
+  controllerGetAllProducts, controllerGetProductById, controllerCreateProduct
 }

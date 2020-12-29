@@ -1,9 +1,10 @@
 //START: IMPORT
 const products = require('../data/products'); //Get Products Data from this file
+// const {v4:uuidv4} = require('uuid');
 //END: IMPORT
 
 // START: findAllProducts
-function findAllProducts(){
+function modelGetAllProducts(){
   //then we return that promise with those products.
   return new Promise((resolve, reject)=>{
     resolve(products);
@@ -12,7 +13,7 @@ function findAllProducts(){
 // END: findAllProducts
 
 // START: findProductById
-function findProductById(id){
+function modelGetProductById(id){
   return new Promise((resolve, reject)=>{
     const product = products.find((p)=>p.id === id); //Find that specific product with that id
     resolve(product);
@@ -20,9 +21,21 @@ function findProductById(id){
 }
 // END: findProductById
 
+
+// START: modelCreateProduct
+// function modelCreateProduct(id){
+//   return new Promise((resolve, reject)=>{
+//     const product = products.find((p)=>p.id === id); //Find that specific product with that id
+//     resolve(product);
+//   })
+// }
+// END: createProduct
+
+
 //START: EXPORT
 module.exports={
-  findAllProducts,
-  findProductById
+  modelGetAllProducts,
+  modelGetProductById,
+  // modelCreateProduct
 };
 //END: EXPORT

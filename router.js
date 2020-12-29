@@ -1,23 +1,45 @@
 //START: IMPORTS
-const {getProducts, getProduct} = require('./controllers/productsControllers');
+const {
+  controllerGetAllProducts, 
+  controllerGetProductById,
+  controllerCreateProduct
+} = require('./controllers/productsControllers');
 //END: IMPORTS
 
-//START: Routes
+//START: ROUTES
 function router(req,res){
-  if(req.url === '/'){
+  //START: Index
+  if(req.url === '/'){ 
     res.writeHead(200,{'Content-Type':'text/html'});
     res.end('<h1>Home</h1>');
-  }else if(req.url === '/api/products' && req.method === "GET"){
-    getProducts(req,res) //From productsController.js
-  } else if(req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'GET'){
+  }
+  //END: Index
+
+  //START: Get All Products
+  else if(req.url === '/api/products' && req.method === "GET"){
+    controllerGetAllProducts(req,res) //From productsController.js
+  } 
+  //END: Get All Products
+
+  //START: Get Product by Id
+  else if(req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'GET'){
     const id = req.url.split('/')[3]; //Create variable id
-    getProduct(req,res,id); //From productsController.js
-  }else{
+    controllerGetProductById(req,res,id); //From productsController.js
+  }
+  //END: Get Product by Id
+
+  else if(req.url === 'api/products' && req.method === 'POST'){
+    controllerCreateProduct(req,res);
+  }
+
+  //START: If Route does not Exist
+  else{
     res.writeHead(404,{'Content-Type':'application/json'});
     res.end(JSON.stringify({message:'Route Not Found'}));
   }
+  //END: If Route does not Exist
 }
-//END: Routes
+//END: ROUTES
 
 //START: EXPORTS
 module.exports={
