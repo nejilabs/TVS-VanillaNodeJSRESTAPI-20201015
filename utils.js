@@ -22,7 +22,6 @@ function utilGetPostData(req){
       reject(error);
     }
   })
-
 }
 //END: utilGetPostData
 

@@ -41,22 +41,14 @@ async function controllerGetProductById(req,res,id) {
 //START: controllerCreateProduct | @desc Create a Product | @route POST /api/products
 async function controllerCreateProduct(req,res) {
   try{
-    let body = '';
-    req.on('data',(contentsOfTheBody)=>{
-      body += contentsOfTheBody.toString();
-    });
-
-    req.on('end',async ()=>{
-      const {title,description,price} = JSON.parse(body); //We then parse the body then use object destructuring to get the title, description, and price.
-
-      const product = {title,description,price} //we then create an object with contents we got from the parsed body
-
-      const newProduct = await Product.modelCreateProduct(product); //then we pass that into the model to create the new product
-
-      res.writeHead(201,{'Content-Type':'application/json'}); //then we respond with that new product
-      return res.end(JSON.stringify(newProduct));
-    })
-
+    const body = await utilGetPostData(req);
+    const {title,description,price} = JSON.parse(body); //We then parse the body then use object destructuring to get the title, description, and price.
+    
+    const product = {title,description,price} //we then create an object with contents we got from the parsed body
+    const newProduct = await Product.modelCreateProduct(product); //then we pass that into the model to create the new product
+    
+    res.writeHead(201,{'Content-Type':'application/json'}); //then we respond with that new product
+    return res.end(JSON.stringify(newProduct));
   }catch(error){
     console.log(error);
   }
