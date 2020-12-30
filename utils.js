@@ -1,14 +1,31 @@
 const fs = require('fs');
 
-function writeDataToFile(filename,content){
+//START: utilWriteDataToFile
+function utilWriteDataToFile(filename,content){
   fs.writeFileSync(filename,JSON.stringify(content),'utf8',(err)=>{
-    console.log('writeDataToFile')
     if(err){
       console.log(err);
     }
   })
 }
+//END: utilWriteDataToFile
+
+
+//START: utilGetPostData
+function utilGetPostData(req){
+  return new Promise((resolve,reject)=>{
+    try{
+      let body='';
+      req.on('data',(contentsOfTheBody)=>body += contentsOfTheBody.toString());
+      req.on('end',()=>resolve(body));
+    }catch(error){
+      reject(error);
+    }
+  })
+
+}
+//END: utilGetPostData
 
 module.exports={
-  writeDataToFile
+  utilWriteDataToFile, utilGetPostData
 }

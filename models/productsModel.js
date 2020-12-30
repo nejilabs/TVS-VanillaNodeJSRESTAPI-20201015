@@ -1,7 +1,7 @@
 //START: IMPORT
 const products = require('../data/products'); //Get Products Data from this file
 const { v4: uuidv4 } = require('uuid');
-const {writeDataToFile} = require('../utils');
+const {utilWriteDataToFile} = require('../utils');
 //END: IMPORT
 
 // START: findAllProducts
@@ -29,7 +29,7 @@ function modelCreateProduct(product) {
       const newProduct = {id: uuidv4(), ...product};
       products.push(newProduct);
 
-      writeDataToFile('./data/products.json', products);
+      utilWriteDataToFile('./data/products.json', products);
 
       resolve(newProduct);
   })
