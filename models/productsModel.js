@@ -1,6 +1,6 @@
 //START: IMPORT
 const products = require('../data/products'); //Get Products Data from this file
-const {v4:uuidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const {writeDataToFile} = require('../utils');
 //END: IMPORT
 
@@ -24,12 +24,14 @@ function modelGetProductById(id){
 
 
 // START: modelCreateProduct
-function modelCreateProduct(){
-  return new Promise((resolve, reject)=>{
-    const newProduct = {id:uuidv4(),...product};
-    products.push(newProduct);
-    writeDataToFile('./data/products.json',products);
-    resolve(newProduct)
+function modelCreateProduct(product) {
+  return new Promise((resolve, reject) => {
+      const newProduct = {id: uuidv4(), ...product};
+      products.push(newProduct);
+
+      writeDataToFile('./data/products.json', products);
+
+      resolve(newProduct);
   })
 }
 // END: createProduct

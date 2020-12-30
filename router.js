@@ -17,7 +17,8 @@ function router(req,res){
 
   //START: Get All Products
   else if(req.url === '/api/products' && req.method === "GET"){
-    controllerGetAllProducts(req,res) //From productsController.js
+    controllerGetAllProducts(req,res); //From productsController.js
+
   } 
   //END: Get All Products
 
@@ -28,9 +29,12 @@ function router(req,res){
   }
   //END: Get Product by Id
 
-  else if(req.url === 'api/products' && req.method === 'POST'){
+  //START: Create Product
+  else if(req.url === '/api/products' && req.method === "POST"){
     controllerCreateProduct(req,res);
-  }
+
+  } 
+  //END: Create Product
 
   //START: If Route does not Exist
   else{
