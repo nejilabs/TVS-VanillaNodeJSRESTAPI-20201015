@@ -56,7 +56,7 @@ async function controllerCreateProduct(req,res) {
 //END: controllerCreateProduct | @desc Create a Product | @route POST /api/products
 
 
-//START: controllerUpdateProduct | @desc Update a Product | @route PUT /api/products/:id
+//START: controllerUpdateProduct | @desc Update a Single Product | @route PUT /api/products/:id
 async function controllerUpdateProduct(req, res, id) {
   try {
       const product = await Product.modelGetProductById(id)
@@ -86,12 +86,34 @@ async function controllerUpdateProduct(req, res, id) {
       console.log(error)
   }
 }
-//END: controllerUpdateProduct | @desc Update a Product | @route PUT /api/products/:id
+//END: controllerUpdateProduct | @desc Update Single a Product | @route PUT /api/products/:id
 
+
+//START: controllerDeleteProduct | @desc Delete Single Product | @route DELETE /api/products/:id
+async function controllerDeleteProduct(req,res,id) {
+  try{
+    const product = await Product.modelGetProductById(id); //From Models
+
+    if (!product){
+      //If Product DOES NOT Exist
+      res.writeHead(404,{'Content-Type':'application/json'}); //Return 404
+      res.end(JSON.stringify({message:'Product Not Found'})); //Display Product Not Found
+    }else{
+      //If Product DOES Exist
+      await Product.modelDeleteProduct(id);
+      res.writeHead(200,{'Content-Type':'application/json'});
+      res.end(JSON.stringify({message: `Product ${id} deleted`}));
+    }
+  }catch(error){
+    console.log(error);
+  }
+}
+//END: controllerDeleteProduct | @desc Delete Single Product | @route DELETE /api/products/:id
 
 module.exports={ 
   controllerGetAllProducts, 
   controllerGetProductById, 
   controllerCreateProduct,
-  controllerUpdateProduct
+  controllerUpdateProduct,
+  controllerDeleteProduct
 }

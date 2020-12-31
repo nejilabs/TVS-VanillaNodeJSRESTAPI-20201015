@@ -3,7 +3,8 @@ const {
   controllerGetAllProducts, 
   controllerGetProductById,
   controllerCreateProduct,
-  controllerUpdateProduct
+  controllerUpdateProduct,
+  controllerDeleteProduct
 } = require('./controllers/productsControllers');
 //END: IMPORTS
 
@@ -40,6 +41,13 @@ function router(req,res){
     controllerUpdateProduct(req, res, id)
   }
   //END: Update Product
+
+  //START: Delete Product
+  else if(req.url.match(/\/api\/products\/\w+/) && req.method === 'DELETE') {
+    const id = req.url.split('/')[3]
+    controllerDeleteProduct(req, res, id)
+  }
+    //END: Delete Product
 
   //START: If Route does not Exist
   else{

@@ -1,5 +1,5 @@
 //START: IMPORT
-const products = require('../data/products'); //Get Products Data from this file
+let products = require('../data/products'); //Get Products Data from this file
 const { v4: uuidv4 } = require('uuid');
 const {utilWriteDataToFile} = require('../utils');
 //END: IMPORT
@@ -50,11 +50,23 @@ function modelUpdateProduct(id,product) {
 // END: modelUpdateProduct
 
 
+// START: modelDeleteProduct 
+function modelDeleteProduct(id) {
+  return new Promise((resolve, reject) => {
+    products = products.filter((p)=>p.id !==id);
+    utilWriteDataToFile('./data/products.json',products);
+    resolve();
+  })
+}
+// END: modelDeleteProduct
+
+
 //START: EXPORT
 module.exports={
   modelGetAllProducts,
   modelGetProductById,
   modelCreateProduct,
-  modelUpdateProduct
+  modelUpdateProduct,
+  modelDeleteProduct
 };
 //END: EXPORT
