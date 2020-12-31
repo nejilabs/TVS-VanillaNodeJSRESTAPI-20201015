@@ -70,7 +70,7 @@ async function controllerUpdateProduct(req, res, id) {
           const { title, description, price } = JSON.parse(body)
 
           const productData = {
-              title: title || product.title,
+              name: title || product.title,
               description: description || product.description,
               price: price || product.price
           }
