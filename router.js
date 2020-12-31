@@ -2,7 +2,8 @@
 const {
   controllerGetAllProducts, 
   controllerGetProductById,
-  controllerCreateProduct
+  controllerCreateProduct,
+  controllerUpdateProduct
 } = require('./controllers/productsControllers');
 //END: IMPORTS
 
@@ -30,11 +31,15 @@ function router(req,res){
   //END: Get Product by Id
 
   //START: Create Product
-  else if(req.url === '/api/products' && req.method === "POST"){
-    controllerCreateProduct(req,res);
-
-  } 
+  else if(req.url === '/api/products' && req.method === "POST"){controllerCreateProduct(req,res);} 
   //END: Create Product
+
+  //START: Update Product
+  else if(req.url.match(/\/api\/products\/\w+/) && req.method === 'PUT') {
+    const id = req.url.split('/')[3]
+    controllerUpdateProduct(req, res, id)
+  }
+  //END: Update Product
 
   //START: If Route does not Exist
   else{

@@ -56,6 +56,42 @@ async function controllerCreateProduct(req,res) {
 //END: controllerCreateProduct | @desc Create a Product | @route POST /api/products
 
 
-module.exports={
-  controllerGetAllProducts, controllerGetProductById, controllerCreateProduct
+//START: controllerUpdateProduct | @desc Update a Product | @route PUT /api/products/:id
+async function controllerUpdateProduct(req, res, id) {
+  try {
+      const product = await Product.modelGetProductById(id)
+
+      if(!product) {
+          res.writeHead(404, { 'Content-Type': 'application/json' })
+          res.end(JSON.stringify({ message: 'Product Not Found' }))
+      } else {
+          const body = await utilGetPostData(req)
+
+          const { title, description, price } = JSON.parse(body)
+
+          const productData = {
+              title: title || product.title,
+              description: description || product.description,
+              price: price || product.price
+          }
+
+          const updProduct = await Product.modelUpdateProduct(id, productData)
+
+          res.writeHead(200, { 'Content-Type': 'application/json' })
+          return res.end(JSON.stringify(updProduct)) 
+      }
+
+
+  } catch (error) {
+      console.log(error)
+  }
+}
+//END: controllerUpdateProduct | @desc Update a Product | @route PUT /api/products/:id
+
+
+module.exports={ 
+  controllerGetAllProducts, 
+  controllerGetProductById, 
+  controllerCreateProduct,
+  controllerUpdateProduct
 }

@@ -34,13 +34,27 @@ function modelCreateProduct(product) {
       resolve(newProduct);
   })
 }
-// END: createProduct
+// END: modelCreateProduct
+
+
+// START: modelUpdateProduct
+function modelUpdateProduct(id,product) {
+  return new Promise((resolve, reject) => {
+    const index = products.findIndex((p)=>p.id===id);
+    products[index] = {id,...product}
+
+    utilWriteDataToFile('./data/products.json',products)
+    resolve(products[index])
+  })
+}
+// END: modelUpdateProduct
 
 
 //START: EXPORT
 module.exports={
   modelGetAllProducts,
   modelGetProductById,
-  modelCreateProduct
+  modelCreateProduct,
+  modelUpdateProduct
 };
 //END: EXPORT
