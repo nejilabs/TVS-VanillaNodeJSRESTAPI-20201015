@@ -42,9 +42,9 @@ async function controllerGetProductById(req,res,id) {
 async function controllerCreateProduct(req,res) {
   try{
     const body = await utilGetPostData(req);
-    const {title,description,price} = JSON.parse(body); //We then parse the body then use object destructuring to get the title, description, and price.
+    const {name,description,price} = JSON.parse(body); //We then parse the body then use object destructuring to get the title, description, and price.
     
-    const product = {title,description,price} //we then create an object with contents we got from the parsed body
+    const product = {name,description,price} //we then create an object with contents we got from the parsed body
     const newProduct = await Product.modelCreateProduct(product); //then we pass that into the model to create the new product
     
     res.writeHead(201,{'Content-Type':'application/json'}); //then we respond with that new product
@@ -67,10 +67,10 @@ async function controllerUpdateProduct(req, res, id) {
       } else {
           const body = await utilGetPostData(req)
 
-          const { title, description, price } = JSON.parse(body)
+          const { name, description, price } = JSON.parse(body)
 
           const productData = {
-              name: title || product.title,
+              name: name || product.name,
               description: description || product.description,
               price: price || product.price
           }
